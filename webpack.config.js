@@ -10,13 +10,22 @@ module.exports = {
 	module: {
     rules: [
       {
-        test: /\.scss$/,
+        test: /\.scss$|.css$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: ["css-loader", "sass-loader"],
-          publicPath: '/dist'
+          publicPath: '../'
         })
-      }
+      },
+      {
+        test: /\.jpg$|.gif$|.png$/,
+        use: 'file-loader?name=[name].[ext]&outputPath=img/'
+      },
+      {
+        test: /\.otf$|.ttf$|.ott$/,
+        use: 'file-loader?name=[name].[ext]&outputPath=font/'
+      },
+
     ]
   },
 	plugins: [
@@ -24,10 +33,6 @@ module.exports = {
     	title: 'Document',
     	template: './src/index.html'
     }),
-    new ExtractTextPlugin({
-    	filename: '/css/style.css',
-    	disable: false,
-    	allChunks: true
-    })
+    new ExtractTextPlugin('css/style.css')
   ]
 }
